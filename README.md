@@ -20,7 +20,7 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
 
 ## Standalone run for hacking
 
-Compile with ```mix```, then run with ```eix -s mix```
+Compile with ```mix```, then run with ```eix -S mix```
 
 Connect to room with ```Erobot.Controller.connect options```
 
