@@ -23,6 +23,7 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
 Compile with ```mix```, then run with ```eix -s mix```
 
 Connect to room with ```Erobot.Controller.connect options```
+
 Send message with
 
 ```Erobot.Controller.connected |> Map.keys |> hd |> Erobot.Worker.message "yo!"```
