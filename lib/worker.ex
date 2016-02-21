@@ -46,6 +46,21 @@ defmodule Erobot.Worker do
     {:noreply, state}
   end
 
+  def handle_info({:stanza, %Stanza.Presence{}}, state) do
+    {:noreply, state}
+  end
+
+  def handle_info({:stanza, %Stanza.IQ{}}, state) do
+    {:noreply, state}
+  end
+
+  def handle_info({:stanza, %Stanza.Message{}=msg}, state) do
+    from = msg.from
+    body = msg.body
+    Logger.error "#{from}: #{body}"
+    {:noreply, state}
+  end
+
   def handle_info(data, state) do
     Logger.error :io_lib.format("~p", [data])
     {:noreply, state}
