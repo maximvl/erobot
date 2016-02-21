@@ -18,7 +18,7 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
           [applications: [:erobot]]
         end
 
-## Standalon run for hacking
+## Standalone run for hacking
 
 Compile with ```mix```, then run with ```eix -s mix```
 
