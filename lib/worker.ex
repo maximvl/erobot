@@ -58,14 +58,14 @@ defmodule Erobot.Worker do
     {:noreply, state}
   end
 
-  def handle_info({:stanza, %Stanza.Message{from: myjid}},
-                  %{myjid: myjid}=state) do
-    {:noreply, state}
-  end
-
   def handle_info({:stanza, %Stanza.Message{}=msg}, state) do
-    Processor.process %Message{from: msg.from, body: msg.body,
-                               source: self}
+    case msg.from.resource == state.opts[:nickname] do
+      true -> :ok
+      false ->
+        Processor.process %Message{from: msg.from,
+                                   body: msg.body,
+                                   source: self}
+    end
     {:noreply, state}
   end
 

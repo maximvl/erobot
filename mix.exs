@@ -31,6 +31,7 @@ defmodule Erobot.Mixfile do
     [{:romeo, "~> 0.4.0"},
      {:exml, github: "esl/exml"},
      {:httpoison, "~> 0.8.1"},
-     {:floki, "~> 0.7.1"}]
+     {:floki, "~> 0.7.1"},
+     {:anaphora, "~> 0.1.1"}]
   end
 end

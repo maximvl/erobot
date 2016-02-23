@@ -1,4 +1,5 @@
-%{"certifi": {:hex, :certifi, "0.3.0"},
+%{"anaphora": {:hex, :anaphora, "0.1.1"},
+  "certifi": {:hex, :certifi, "0.3.0"},
   "connection": {:hex, :connection, "1.0.2"},
   "exml": {:git, "https://github.com/esl/exml.git", "d7b745fa89389b53706a07f33775f1f814c66cb4", []},
   "floki": {:hex, :floki, "0.7.1"},
