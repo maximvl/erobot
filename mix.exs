@@ -14,7 +14,7 @@ defmodule Erobot.Mixfile do
   #
   # Type "mix help compile.app" for more information
   def application do
-    [applications: [:logger, :romeo],
+    [applications: [:logger, :romeo, :httpoison],
      mod: {Erobot, []}]
   end
 
@@ -29,6 +29,8 @@ defmodule Erobot.Mixfile do
   # Type "mix help deps" for more examples and options
   defp deps do
     [{:romeo, "~> 0.4.0"},
-     {:exml, github: "esl/exml"}]
+     {:exml, github: "esl/exml"},
+     {:httpoison, "~> 0.8.1"},
+     {:floki, "~> 0.7.1"}]
   end
 end

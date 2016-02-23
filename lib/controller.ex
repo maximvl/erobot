@@ -32,7 +32,7 @@ defmodule Erobot.Controller do
   ## Server Callbacks
 
   def init(:ok) do
-    {:ok, %{:connections => %{}}}
+    {:ok, %{connections: %{}}}
   end
 
   def handle_call({:connect, opts}, _from, state) do
@@ -63,6 +63,7 @@ defmodule Erobot.Controller do
   end
 
   def handle_cast({_tag, _ref, _type, pid, info}, state) do
+    Logger.warn "worker terminated: #{pid} #{info}"
     opts = state[:connections][pid][:options]
     Logger.warn "#{pid} (#{opts}) terminated: #{info}"
     state2 = put_in(state[:connections],

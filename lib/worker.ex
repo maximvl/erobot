@@ -4,6 +4,8 @@ defmodule Erobot.Worker do
 
   alias Romeo.Connection
   alias Romeo.Stanza
+  alias Erobot.Message
+  alias Erobot.Processor
 
   def start(opts) do
     GenServer.start(__MODULE__, opts, [])
@@ -12,8 +14,8 @@ defmodule Erobot.Worker do
   def stop(pid) do
     try do
       GenServer.call(pid, :stop)
-    rescue
-      _ -> Process.exit(pid, :forsed)
+    catch
+      :exit, _ -> Process.exit(pid, :forsed)
     end
     :ok
   end
@@ -25,8 +27,9 @@ defmodule Erobot.Worker do
   # Callbacks
 
   def init(opts) do
+    myjid = "#{opts[:room]}/#{opts[:nickname]}"
     {:ok, pid} = Connection.start_link opts
-    {:ok, %{:opts => opts, :pid => pid}, 5000}
+    {:ok, %{opts: opts, pid: pid, myjid: myjid}}
   end
 
   def handle_call(:stop, _from, state) do
@@ -35,7 +38,8 @@ defmodule Erobot.Worker do
   end
 
   def handle_cast({:message, msg}, state) do
-    Connection.send(state[:pid], Stanza.groupchat(state[:opts][:room], msg))
+    Connection.send(state[:pid],
+                    Stanza.groupchat(state[:opts][:room], msg))
     {:noreply, state}
   end
 
@@ -54,10 +58,14 @@ defmodule Erobot.Worker do
     {:noreply, state}
   end
 
+  def handle_info({:stanza, %Stanza.Message{from: myjid}},
+                  %{myjid: myjid}=state) do
+    {:noreply, state}
+  end
+
   def handle_info({:stanza, %Stanza.Message{}=msg}, state) do
-    from = msg.from
-    body = msg.body
-    Logger.error "#{from}: #{body}"
+    Processor.process %Message{from: msg.from, body: msg.body,
+                               source: self}
     {:noreply, state}
   end
 
